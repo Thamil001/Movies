@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+body {
+
+    background-color: black;
+
+}
+
+@layer base {
+    h1 {
+        @apply text-2xl text-white font-bold text-6xl;
+    }
+}
