@@ -119,7 +119,7 @@ const MoviePage = () => {
           <section className="w-full md:w-1/2 px-4">
             <article className="flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-white">
-                Name: <span className="text-slate-100">{movie.title}</span>
+                Name: <span className="text-slate-100">{movie.Title}</span>
               </h2>
 
               <h2 className="text-lg font-medium text-white/90">

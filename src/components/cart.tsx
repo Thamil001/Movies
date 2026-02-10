@@ -58,7 +58,7 @@ const Cart = ({ movie }: CartProps) => {
               const target = e.target as HTMLImageElement;
               target.src = PosterImage;
             }}
-            className="object-cover w-full h-full"
+            className="w-full h-100 object-cover"
           />
         </div>
 
