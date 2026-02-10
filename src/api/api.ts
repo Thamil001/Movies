@@ -1,16 +1,16 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-// const api = axios.create({
-//   baseURL: "/.netlify/functions/omdb",
-// });
-
 const api = axios.create({
-  baseURL: "https://www.omdbapi.com",
-  params: {
-    apikey: import.meta.env.VITE_OMDB_API_KEY,
-  },
+  baseURL: "/.netlify/functions/omdb",
 });
+
+// const api = axios.create({
+//   baseURL: "https://www.omdbapi.com",
+//   params: {
+//     apikey: import.meta.env.VITE_OMDB_API_KEY,
+//   },
+// });
 
 api.interceptors.response.use(
   (response) => response,
