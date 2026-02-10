@@ -2,18 +2,19 @@ import api from "./api/api.ts";
 import Cart from "./components/cart.tsx";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useRef } from "react";
 import axios from "axios";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [searchMovies, setSearch] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const currentYear: number = new Date().getFullYear();
+  const searchInput = useRef<HTMLInputElement>(null);
 
-  const search = async (title: string) => {
-    if (!title.trim()) {
-      setError("Please enter a movie title");
+  const search = async () => {
+    if (!searchInput.current?.value.trim()) {
+      setError("Please enter a movie searchInput.current.value");
       return;
     }
 
@@ -22,7 +23,7 @@ const App = () => {
 
     try {
       const res = await api.get("/", {
-        params: { s: title, page: 1 },
+        params: { s: searchInput.current?.value, page: 1 },
       });
 
       if (res.data.Response === "True") {
@@ -80,7 +81,7 @@ const App = () => {
     };
 
     loadInitialMovies();
-  }, []);
+  }, [currentYear]);
 
   return (
     <div className="flex max-sm:flex-col flex-wrap items-center gap-8">
@@ -101,14 +102,10 @@ const App = () => {
             autoComplete="on"
             className="outline-none border-none pr-4 rounded-md w-11/12"
             placeholder="Search..."
-            value={searchMovies}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && search(searchMovies)}
+            ref={searchInput}
+            onKeyDown={(e) => e.key === "Enter" && search()}
           />
-          <FaSearch
-            className="cursor-pointer"
-            onClick={() => search(searchMovies)}
-          />
+          <FaSearch className="cursor-pointer" onClick={() => search()} />
         </div>
       </div>
 

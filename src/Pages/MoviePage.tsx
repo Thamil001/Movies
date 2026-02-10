@@ -5,22 +5,23 @@ import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import api from "../api/api";
 import PosterImage from "../assets/Poster.png";
+import { useRef } from "react";
 
 const MoviePage = () => {
-  const [searchMovies, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const movieData = useSelector((state: RootState) => state.movie);
+  const searchInput = useRef<HTMLInputElement>(null);
 
-  const search = async (title: string) => {
-    if (!title.trim()) {
-      setError("Please enter a movie title");
+  const search = async () => {
+    if (!searchInput.current?.value.trim()) {
+      setError("Please enter a movie searchInput.current?.value");
       return;
     }
 
     try {
       const res = await api.get("/", {
-        params: { s: title, page: 1 },
+        params: { s: searchInput.current?.value, page: 1 },
       });
       if (res.data.Response === "True") {
         setError("");
@@ -53,7 +54,7 @@ const MoviePage = () => {
     if (Object.keys(movies).length !== 0) {
       sessionStorage.setItem("val", JSON.stringify(movies));
     }
-  }, [movieData, movies, searchMovies]);
+  }, [movieData, movies]);
 
   const movie = useMemo(() => {
     if (Object.keys(movies).length !== 0) {
@@ -85,15 +86,14 @@ const MoviePage = () => {
             autoComplete="on"
             className="outline-none border-none pr-4 rounded-md md:w-11/12"
             placeholder="Search..."
-            value={searchMovies}
-            onChange={(e) => setSearch(e.target.value)}
+            ref={searchInput}
             onKeyDown={(e) =>
-              e.key === "Enter" && searchMovies !== "" && search(searchMovies)
+              e.key === "Enter" && searchInput.current?.value !== "" && search()
             }
           />
           <FaSearch
             className="text-gray-1000 cursor-pointer"
-            onClick={() => search(searchMovies)}
+            onClick={() => search()}
           />
         </div>
         <div className="py-3">
@@ -119,7 +119,7 @@ const MoviePage = () => {
           <section className="w-full md:w-1/2 px-4">
             <article className="flex flex-col gap-3">
               <h2 className="text-2xl font-bold text-white">
-                Name: <span className="text-slate-100">{movie.Title}</span>
+                Name: <span className="text-slate-100">{movie.title}</span>
               </h2>
 
               <h2 className="text-lg font-medium text-white/90">
