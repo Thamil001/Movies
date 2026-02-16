@@ -47,7 +47,7 @@ const Cart = ({ movie }: CartProps) => {
   return (
     <>
       <div
-        className="flex-col selection:bg-blue-900 bg-linear-to-r from-blue-500 to-cyan-400 rounded-sm outline outline-amber-50  sm:w-4/12 md:w-2/6 lg:w-80 overflow-hidden"
+        className="flex-col selection:bg-blue-900 bg-linear-to-r from-blue-500 to-cyan-400 rounded-sm outline outline-amber-50  sm:w-4/12 md:w-2/6 lg:w-80 overflow-hidden cursor-pointer"
         onClick={() => handleClick(movie.imdbID)}
       >
         <div>

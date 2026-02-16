@@ -109,7 +109,7 @@ const App = () => {
         </div>
       </div>
 
-      <div className="flex flex-row w-screen flex-wrap px-4 justify-center gap-8 ">
+      <div className="flex flex-row w-screen flex-wrap px-4 justify-center gap-8 pb-6">
         {loading ? (
           <div className="flex justify-center items-center h-40">
             <div className="w-12 h-12 border-4 border-[#e50914] border-t-transparent rounded-full animate-spin"></div>
