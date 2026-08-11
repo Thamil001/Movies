@@ -56,7 +56,7 @@ const App = () => {
         const res = await api.get("/", {
           params: {
             s: "movie",
-            y: currentYear - 1,
+            y: currentYear,
             type: "movie",
           },
         });
