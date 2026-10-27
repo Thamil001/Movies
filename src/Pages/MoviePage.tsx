@@ -6,19 +6,22 @@ import axios from "axios";
 import api from "../api/api";
 import PosterImage from "../assets/Poster.png";
 import { useRef } from "react";
+import { usePostHog } from "@posthog/react";
 
 const MoviePage = () => {
+  
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const movieData = useSelector((state: RootState) => state.movie);
   const searchInput = useRef<HTMLInputElement>(null);
+  const posthog = usePostHog()
 
   const search = async () => {
     if (!searchInput.current?.value.trim()) {
       setError("Please enter a movie searchInput.current?.value");
       return;
     }
-
+    const moviesName = searchInput.current?.value.trim();
     try {
       const res = await api.get("/", {
         params: { s: searchInput.current?.value, page: 1 },
@@ -30,6 +33,10 @@ const MoviePage = () => {
           params: { i: id },
         });
         setMovies(searchedMovie.data);
+        posthog.capture("movies",{
+          moviesName,
+          result:res.data.length
+        })
         window.scrollTo(0, 0);
       } else {
         window.scrollTo(0, 0);
@@ -81,6 +88,7 @@ const MoviePage = () => {
     <main className="min-h-dvh bg-linear-to-r from-blue-500 to-cyan-400">
       <section className="flex flex-col items-center justify-center pt-3 sticky top-2">
         <div className="flex-row items-center flex rounded-4xl px-4 sticky top-4 h-10 md:w-3/12 bg-white opacity-75 hover:outline-green-600 outline-2 hover:opacity-100">
+        
           <input
             autoFocus
             autoComplete="on"

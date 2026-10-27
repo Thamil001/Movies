@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useRef } from "react";
 import axios from "axios";
+import { usePostHog } from "@posthog/react";
+
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -11,6 +13,10 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const currentYear: number = new Date().getFullYear();
   const searchInput = useRef<HTMLInputElement>(null);
+  const posthog = usePostHog()
+  useEffect(()=>{
+    posthog.capture("site_visit")
+  },[posthog])
 
   const search = async () => {
     if (!searchInput.current?.value.trim()) {
