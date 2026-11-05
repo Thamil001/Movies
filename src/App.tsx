@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { useRef } from "react";
 import axios from "axios";
 import { usePostHog } from "@posthog/react";
+import GoogleAd from "./components/GoogleAd.tsx";
 
 
 const App = () => {
@@ -125,6 +126,7 @@ const App = () => {
         ) : (
           error && <h1 className="text-red-600 text-3xl">{error}</h1>
         )}
+        <GoogleAd slot="9059092080" />
       </div>
     </div>
   );

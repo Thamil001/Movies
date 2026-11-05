@@ -36,7 +36,7 @@ const MoviePage = () => {
         posthog.capture("movies",{
           moviesName,
           result:res.data.length
-        })
+        })  
         window.scrollTo(0, 0);
       } else {
         window.scrollTo(0, 0);
